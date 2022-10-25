@@ -10,6 +10,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
                 <CardImgOverlay>
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>
+                <h3>dasdasdas</h3>
             </Card>
         );
     }
