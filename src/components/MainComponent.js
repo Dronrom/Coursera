@@ -10,6 +10,8 @@ import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
 import { PROMOTIONS } from '../shared/promotions';
 import { Routes , Route, Navigate  } from 'react-router';
+import { Link, useParams } from 'react-router-dom';
+import About from './AboutComponent';
 
 
 
@@ -34,12 +36,25 @@ class Main extends Component {
         )
     }
 
+    const DishWithId = () => {
+        const { dishId } = useParams()
+        console.log(dishId)
+        console.log(this.state.dishes)
+        return(
+            <DishDetail dish={this.state.dishes.find((dish) => String(dish.id) === dishId)} 
+                comments={this.state.comments}
+            />
+        )
+    }
+
     return (
       <div className="App">
         <Header/>
         <Routes>
             <Route path="/home" element={<HomePage/>} />
             <Route exact path="/menu" element={<Menu dishes={this.state.dishes}/>} />
+            <Route path="menu/:dishId" element={<DishWithId />}/>
+            <Route exact path="/aboutus" element={<About leaders={this.state.leaders}/>} />
             <Route exact path="/contactus" element={<Contact />} />
         </Routes>
         {/* <Navigate  to="/" />  */}
