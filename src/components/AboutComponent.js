@@ -17,7 +17,7 @@ function RenderLeader({leader}) {
         </Media>
       </div>
     );
-  }
+  } 
 
 
 function About(props) {
