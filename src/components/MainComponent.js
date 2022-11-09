@@ -6,10 +6,12 @@ import Menu from './MenuComponent';
 import DishDetail from "./DishDetailComponent";
 import Footer from './FooterComponent';
 
-import { Routes , Route, Navigate  } from 'react-router';
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Routes , Route } from 'react-router';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import About from './AboutComponent';
+import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { actions } from 'react-redux-form'
 
 const mapStateToProps = (state) => {
     return {
@@ -19,6 +21,12 @@ const mapStateToProps = (state) => {
       promotions: state.promotions
     }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: () => {dispatch(fetchDishes())},
+  resetFeedbackForm: () => {dispatch(actions.reset('feedback'))}
+})
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -46,10 +54,16 @@ class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.fetchDishes();
+  }
+
   render () {
     const HomePage = () => {
         return (
-            <Home dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+            <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
+                dishesLoading={this.props.dishes.isLoading}
+                dishesErrMess={this.props.dishes.errMess}
                 promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
                 leader={this.props.leaders.filter((leader) => leader.featured)[0]}        
              />
@@ -61,8 +75,11 @@ class Main extends Component {
         console.log(dishId)
         console.log(this.props.dishes)
         return(
-            <DishDetail dish={this.props.dishes.find((dish) => String(dish.id) === dishId)} 
+            <DishDetail dish={this.props.dishes.dishes.find((dish) => String(dish.id) === dishId)} 
+                isLoading={this.props.dishes.isLoading}
+                errMess={this.props.dishes.errMess}
                 comments={this.props.comments}
+                addComment={this.props.addComment}
             />
         )
     }
@@ -75,7 +92,7 @@ class Main extends Component {
             <Route exact path="/menu" element={<Menu dishes={this.props.dishes}/>} />
             <Route path="menu/:dishId" element={<DishWithId />}/>
             <Route exact path="/aboutus" element={<About leaders={this.props.leaders}/>} />
-            <Route exact path="/contactus" element={<Contact />} />
+            <Route exact path="/contactus" element={<Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
         </Routes>
         {/* <Navigate  to="/" />  */}
         
@@ -89,4 +106,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
