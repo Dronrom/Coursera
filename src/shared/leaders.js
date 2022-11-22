@@ -28,7 +28,7 @@ export const LEADERS = [
     },
     {
       id: 3,
-      name: 'Alberto Somayya',
+      name: 'vadonut Somayya',
       image: '/assets/images/zucchipakoda.png',
       designation: 'Executive Chef',
       abbr: 'EC',
