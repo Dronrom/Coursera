@@ -28,52 +28,52 @@ class Header extends Component {
 
     handleLogin(event){
         this.toggleModal();
-        alert("Username: " + this.username.value + "Password: "+ this.password.value + "Remember: " + this.remember.checked)
+        alert("Username: " + this.username.value + " Password: "+ this.password.value + " Remember: " + this.remember.checked)
         event.preventDefault();
     }
     
     render() {
         return(
             <>
-                <Navbar dark expand="md">
-                    <div className='container'>
-                        <NavbarToggler onClick={this.toggleNav}/>
-                        <NavbarBrand className="mr-auto" href="/">
-                            <img src="../assets/img/logo.png" height="30" weight="41" alt="logo"/> 
+                 <Navbar dark expand="md">
+                    <div className="container menu">
+                        <NavbarBrand className="mr-auto menu" href="/">
+                            <img src="assets/images/logo.png" id="logo" alt="Ristorante Con Fusion" />
                         </NavbarBrand>
-                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                        <NavbarToggler onClick={ this.toggleNav } />
+                        <Collapse isOpen={ this.state.isNavOpen } navbar >
                             <Nav navbar>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/home">
+                                    <NavLink className="nav-link" to='/home'>
                                         <span className="fa fa-home fa-lg"></span> Home
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/aboutus">
+                                    <NavLink className="nav-link" to='/aboutus'>
                                         <span className="fa fa-info fa-lg"></span> About Us
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/menu">
+                                    <NavLink className="nav-link" to='/menu'>
                                         <span className="fa fa-list fa-lg"></span> Menu
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to="/contactus">
+                                    <NavLink className="nav-link" to='/contactus'>
                                         <span className="fa fa-address-card fa-lg"></span> Contact Us
                                     </NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <Button outline onClick={this.toggleModal}>
+                                    <Button  outline onClick={this.toggleModal}>
                                         <span className="fa fa-sign-in fa-lg"></span> Login
                                     </Button>
                                 </NavItem>
                             </Nav>
-                        </Collapse> 
+                        </Collapse>
                     </div>
-                </Navbar> 
+                </Navbar>    
                 <div className="p-5 mb-4 sbg-light rounded-3 ">
                     <div className="jumbotron container-fluid py-5">
                     <div className='container '>

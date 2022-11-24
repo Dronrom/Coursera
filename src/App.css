@@ -10,6 +10,18 @@
     min-height:400px;
 }
 
+.menu {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;  
+}
+
+#logo{
+   
+    height: 50px;
+    width: 61px;
+}
+
 .footer{
     background-color: #D1C4E9;
     margin:0px auto;

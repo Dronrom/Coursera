@@ -47,7 +47,7 @@ const About = (props) => {
         return(
             <div className="container">
                 <div className="row">
-                    <h4>{props.leaders.errMess}</h4>
+                     <h4>{props.leaders.errMess}</h4> {/*//We dont add the div to surround it here like in the dishDetailComponent as the Menu Component hadles the positioning for us. */}
                 </div>
             </div>
         );

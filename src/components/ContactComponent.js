@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, Form, Errors } from 'react-redux-form';
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val?.length <= len);
+const required = (val) => val && val.length; //checks to see if the value is greater than 0
+const maxLength = (len) => (val) => !(val) || (val?.length <= len); //ensures that the length is less than the value we have set in the variable len. Understand that this is a function of a function  
 const minLength = (len) => (val) => val || (val?.length >= len);
 const isNumber = (val) => !isNaN(Number(val));
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
@@ -14,7 +15,7 @@ class Contact extends Component {
     constructor(props) {
         super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this); //We do this so that the handleSubmit method available for use, we need to bind this in the constructor here.
     }
 
 
@@ -51,7 +52,7 @@ class Contact extends Component {
                             HONG KONG<br />
                             <i className="fa fa-phone"></i>: +852 1234 5678<br />
                             <i className="fa fa-fax"></i>: +852 8765 4321<br />
-                            <i className="fa fa-envelope"></i>: <a href="mailto:confusion@food.net">confusion@food.net</a>
+                            <i className="fa fa-envelope"></i>: <a href="!#mailto:confusion@food.net">confusion@food.net</a>
                         </address>
                     </div>
                     <div className="col-12 col-sm-6 offset-sm-1">

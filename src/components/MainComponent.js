@@ -9,27 +9,39 @@ import { Routes , Route } from 'react-router';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import About from './AboutComponent';
+//The below action creator function in order to obtain an 
+//action JavaScript object which we can then dispatch to 
+//the store by saying, calling store dispatch. 
 import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedback } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-const mapStateToProps = (state) => {
+//This mapStateToProps is responsible for getting data from STORE to the COMPONENT in your website.
+//It will return an object where the key is the LHS(left hand side) of the : and the value is the RHS of the :.
+const mapStateToProps = (state) => {  // The state here is from the redux store. 
     return {
       dishes: state.dishes,
       comments: state.comments,
       leaders: state.leaders,
       promotions: state.promotions
-    }
+    } //The above will be available to the mainComponent as props now.
 }
 
 const mapDispatchToProps = (dispatch) => ({
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
-  fetchDishes: () => {dispatch(fetchDishes())},
+  fetchDishes: () => {dispatch(fetchDishes())}, // So the fetchDishes with purple brackets is the thunk that we imported. We are able to dispatch this thunk via the dispatch function.
+  //  And now in order to do this, you have to map it to the mapDispatchToProps so that the fetchDishes key becomes available in the Main Component to make use of
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())},
   fetchLeaders: () => {dispatch(fetchLeaders())},
   postFeedback: (formValues) => dispatch(postFeedback(formValues))
+   //This mapDispatchToProps is responsible for sending data from COMPONENT in your website to the STORE in redux.
+    // This is a function in a function. First input value is a function called dispatch. This then is use in the RHS of the second =>.
+    // So when you call the 'postComment' key, a nameless function on the RHS of the : is called from a COMPONENT, it requires input values of (dishID....comments).
+    // It will then go to the RHS of => and pass these inputs into the 'postComment' in thr RHS.  
+    // that we imported from the ActionCreators. This postComment will return an action Object which will inturn 
+    // call the dispatch function to update the store with the new values by first going through the relevant reducer function. 
 })
 
 function withRouter(Component) {
@@ -52,6 +64,7 @@ function withRouter(Component) {
 
 class Main extends Component {
 
+      // This runs when the Main component is first mounted in the view.
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
@@ -76,7 +89,7 @@ class Main extends Component {
     }
 
     const DishWithId = () => {
-        const { dishId } = useParams()
+        const { dishId } = useParams() //Here the const has to be of the same name(exact word) as you put in your route menu/:dishID
         console.log(dishId)
         console.log(this.props.dishes)
         return(
@@ -86,17 +99,18 @@ class Main extends Component {
                 comments={this.props.comments.comments}
                 CommentsErrMess={this.props.comments.errMess}
                 postComment={this.props.postComment}
+                //The addComment is the function created above which is passed into the DishDetail component as a third attibute. Now we can use this attribute to dispatch to the store.
             />
         )
     }
-
+    console.log(this.props);
     return (
       <div className="App">
       <Header/>
       <TransitionGroup>
         <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
           <Routes>
-              <Route path="/home" element={<HomePage/>} />
+              <Route path="/home" element={<HomePage />} />
               <Route exact path="/menu" element={<Menu dishes={this.props.dishes}/>} />
               <Route path="menu/:dishId" element={<DishWithId />}/>
               <Route exact path="/aboutus" element={<About leaders={this.props.leaders}/>} />
@@ -117,3 +131,5 @@ class Main extends Component {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+//Here what we do is connect the MainComponent to the Redux Store. 
+//The connect will allow the mapStateToProps and mapDispatchToProps to become available in the Main Class here as a prop. 

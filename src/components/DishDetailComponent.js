@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, Button, BreadcrumbItem, Modal, ModalBody, ModalHeader,Label, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
